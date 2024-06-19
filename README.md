@@ -14,4 +14,10 @@ The **Acads Hall and Slot Management System** is designed to efficiently manage 
 **Clone the repository**
    ```bash
    git clone git@github.com:rzeta-10/Acads-Hall-and-Slot-Management-System.git
+   ```
+
+**Run Locally**
+   ```bash
    cd Acads-Hall-and-Slot-Management-System
+   python3 app.py
+   ```
