@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            background-image: url('./static/mn.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #fff; /* Set text color to white for better contrast */
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #020202; /* Set text color to white for better contrast */
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px; /* Add margin at the bottom for better spacing */
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333; /* Set text color to black for better readability */
+        }
+
+        form input[type="number"],
+        form input[type="text"],
+        form input[type="email"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            color: #333; /* Set text color to black for better readability */
+        }
+
+        table th, table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Students</h2>
+    <form method="post" action="{{ url_for('students') }}">
+        <h3>Add New Student</h3>
+        <label for="student_id">Student ID:</label>
+        <input type="number" id="student_id" name="student_id" required>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="dept">Department:</label>
+        <input type="text" id="dept" name="dept" required>
+        
+        <label for="sem">Semester:</label>
+        <input type="number" id="sem" name="sem" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required>
+        
+        <label for="batch">Batch:</label>
+        <input type="text" id="batch" name="batch" required>
+        
+        <label for="credits">Total Credits:</label>
+        <input type="number" id="credits" name="credits" required>
+        
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" required>
+
+        <input type="submit" value="Add Student">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Semester</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Batch</th>
+                <th>Total Credits</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.Student_Id }}</td>
+                <td>{{ student.Name }}</td>
+                <td>{{ student.Dept }}</td>
+                <td>{{ student.Sem }}</td>
+                <td>{{ student.E_Mail }}</td>
+                <td>{{ student.Phone_Number }}</td>
+                <td>{{ student.Batch }}</td>
+                <td>{{ student.Total_Credits }}</td>
+                <td>{{ student.Password }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('delete_student', student_id=student.Student_Id) }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form method="post" action="{{ url_for('edit_student', student_id=student.Student_Id) }}">
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            background-image: url('../static/mn.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center top;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            background-color: #ffffff89;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select {
+            width: calc(100% - 22px);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0056b3;
+        }
+
+        .status-pending {
+            color: orange;
+        }
+
+        .status-available {
+            color: green;
+        }
+
+        .status-not-available {
+            color: red;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h2>Welcome, Faculty</h2>
+            <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+        <h3>Your Schedule</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Slot ID</th>
+                    <th>Day</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Hall ID</th>
+                    <th>Course ID</th>
+                    <th>Course Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in schedule %}
+                <tr>
+                    <td>{{ entry.Slot_Id }}</td>
+                    <td>{{ entry.Day }}</td>
+                    <td>{{ entry.Time_Start }}</td>
+                    <td>{{ entry.Time_End }}</td>
+                    <td>{{ entry.Hall_Id }}</td>
+                    <td>{{ entry.Course_Id }}</td>
+                    <td>{{ entry.Course_Name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Submit Lecture Request</h3>
+        <form method="post" action="{{ url_for('faculty_dashboard') }}">
+            <label for="request_id">Request ID:</label>
+            <input type="text" id="request_id" name="request_id" placeholder="Request ID" required><br><br>
+            <label for="course_id">Course ID:</label>
+            <input type="text" id="course_id" name="course_id" placeholder="Course ID" required><br><br>
+            <label for="batch">Batch:</label>
+            <input type="text" id="batch" name="batch" placeholder="Batch" required><br><br>
+            <label for="slot_id">Slot ID:</label>
+            <input type="text" id="slot_id" name="slot_id" placeholder="Slot ID" required><br><br>
+            <label for="time_start">Time Start:</label>
+            <input type="time" id="time_start" name="time_start" required><br><br>
+            <label for="time_end">Time End:</label>
+            <input type="time" id="time_end" name="time_end" required><br><br>
+            <p>Note: Status will be set as accepted or rejected based on slot availability.</p>
+            <button type="submit">Submit Request</button>
+        </form>
+        <h3>Your Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Course ID</th>
+                    <th>Batch</th>
+                    <th>Slot ID</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td>{{ request.Request_Id }}</td>
+                    <td>{{ request.Course_Id }}</td>
+                    <td>{{ request.Batch }}</td>
+                    <td>{{ request.Slot_Id }}</td>
+                    <td>{{ request.Time_Start }}</td>
+                    <td>{{ request.Time_End }}</td>
+                    <td>
+                        {% if request.Status == 'Pending' %}
+                            <span class="status-pending">Pending</span>
+                        {% elif request.Status == 'Available' %}
+                            <span class="status-available">Available</span>
+                        {% elif request.Status == 'Not Available' %}
+                            <span class="status-not-available">Not Available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

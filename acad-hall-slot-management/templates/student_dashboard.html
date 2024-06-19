@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            background-image: url('./static/mn.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            color: #333; /* Set text color to black for better readability */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header h2 {
+            margin: 10;
+            font-size: 50px; /* Increase font size */
+        }
+
+        .header a {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff; /* Blue color */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .header a:hover {
+            background-color: #0056b3; /* Darker blue color on hover */
+        }
+
+        h3, h4 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 35px; /* Increase font size */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 80px;
+            font-size: 16px; /* Increase font size */
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h2>Welcome, Student</h2>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        <h3>Your Timetable</h3>
+        <h4>Monday</h4> <!-- Assuming this is the day -->
+        <table border="1">
+            <tr>
+                <th>Slot ID</th>
+                <th>Time Start</th>
+                <th>Time End</th>
+                <th>Hall ID</th>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Instructor Name</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>08:00</td>
+                <td>10:00</td>
+                <td>05</td>
+                <td>2008</td>
+                <td>DBMS</td>
+                <td>sivaselvan</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>12:00</td>
+                <td>14:00</td>
+                <td>45</td>
+                <td>2009</td>
+                <td>TOC</td>
+                <td>sadagopan</td>
+            </tr>
+        </table>
+        <h3>Lecture Requests</h3>
+        <table border="1">
+            <tr>
+                <th>Request ID</th>
+                <th>Course ID</th>
+                <th>Batch</th>
+                <th>Slot ID</th>
+                <th>Time Start</th>
+                <th>Time End</th>
+                <th>Status</th>
+            </tr>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.Request_Id }}</td>
+                <td>{{ request.Course_Id }}</td>
+                <td>{{ request.Batch }}</td>
+                <td>{{ request.Slot_Id }}</td>
+                <td>{{ request.Time_Start }}</td>
+                <td>{{ request.Time_End }}</td>
+                <td>{{ request.Status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

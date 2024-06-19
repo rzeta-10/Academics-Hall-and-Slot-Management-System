@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('./static/mn.jpeg'); /* Change './static/mn.jpeg' to your image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .center-heading {
+            text-align: center;
+            color: #fff; /* White text color */
+        }
+
+        .admin-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .admin-option {
+            background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+            text-align: center;
+            width: 250px;
+        }
+
+        .admin-option h2 {
+            color: #333; /* Dark text color */
+        }
+
+        .admin-option a {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff; /* Blue button background color */
+            color: #fff; /* White button text color */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .admin-option a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="center-heading">Admin Dashboard</h1>
+    <div class="admin-options">
+        <div class="admin-option">
+            <h2>Manage Students</h2>
+            <a href="{{ url_for('students') }}">Manage</a>
+        </div>
+        <div class="admin-option">
+            <h2>Manage Instructors</h2>
+            <a href="{{ url_for('instructors') }}">Manage</a>
+        </div>
+        <div class="admin-option">
+            <h2>Manage Courses</h2>
+            <a href="{{ url_for('courses') }}">Manage</a>
+        </div>
+        <div class="admin-option">
+            <h2>Manage Slots</h2>
+            <a href="{{ url_for('slots') }}">Manage</a>
+        </div>
+        <div class="admin-option">
+            <h2>Manage Halls</h2>
+            <a href="{{ url_for('halls') }}">Manage</a>
+        </div>
+        <div class="admin-option">
+            <h2>Manage Requests</h2>
+            <a href="{{ url_for('requests') }}">Manage</a>
+        </div>
+    </div>
+</body>
+</html>

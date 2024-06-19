@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        background-image: url('../static/mn.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center top;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+    }
+
+    .dashboard-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background-color: #ffffff7d;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+        color: #333;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    select {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    select {
+        width: calc(100% - 22px);
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    button, input[type="submit"] {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button:hover, input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h2>Instructors</h2>
+    <form method="post" action="{{ url_for('instructors') }}">
+        <h3>Add New Instructor</h3>
+        <label for="instructor_id">Instructor ID:</label>
+        <input type="number" id="instructor_id" name="instructor_id" required>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="dept">Department:</label>
+        <input type="text" id="dept" name="dept" required>
+        
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+        
+        <label for="cabin_no">Cabin No:</label>
+        <input type="text" id="cabin_no" name="cabin_no" required>
+        
+        <label for="course_id">Course ID:</label>
+        <input type="number" id="course_id" name="course_id" required>
+        
+        <label for="batch">Batch:</label>
+        <input type="text" id="batch" name="batch" required>
+        
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" required>
+
+        <input type="submit" value="Add Instructor">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Email</th>
+                <th>Cabin No</th>
+                <th>Course ID</th>
+                <th>Batch</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for instructor in instructors %}
+            <tr>
+                <td>{{ instructor.Instructor_Id }}</td>
+                <td>{{ instructor.Name }}</td>
+                <td>{{ instructor.Dept }}</td>
+                <td>{{ instructor.E_mail }}</td>
+                <td>{{ instructor.Cabin_no }}</td>
+                <td>{{ instructor.Course_Id }}</td>
+                <td>{{ instructor.Batch }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('delete_instructor', instructor_id=instructor.Instructor_Id) }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form method="post" action="{{ url_for('edit_instructor', instructor_id=instructor.Instructor_Id) }}">
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
