@@ -1,6 +1,6 @@
 # Acads Hall and Slot Management System
 
-##Course Project - DBMS
+Course Project - DBMS
 
 ## Introduction
 
