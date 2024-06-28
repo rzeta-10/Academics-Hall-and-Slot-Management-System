@@ -1,5 +1,7 @@
 # Acads Hall and Slot Management System
 
+##Course Project - DBMS
+
 ## Introduction
 
 The **Acads Hall and Slot Management System** is designed to efficiently manage hall bookings and slot allocations in an academic institution. This system helps in organizing and managing the reservations of halls for various events and academic purposes.
